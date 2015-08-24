@@ -1,4 +1,7 @@
 #pragma once
+
+#include "Render.h"
+
 class Lane
 {
 private:

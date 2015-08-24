@@ -17,5 +17,6 @@ public:
 	void setId(int id);
 	std::vector<Lane>& getLanes();
 	int getId();
+	void render(int intersectionSize);
 };
 

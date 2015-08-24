@@ -31,3 +31,8 @@ int Road::getId()
 {
 	return id;
 }
+
+void Road::render(int intersectionSize)
+{
+	Render::GetInstance().drawRoad(id, id/4, getLanes().size(), intersectionSize);
+}
