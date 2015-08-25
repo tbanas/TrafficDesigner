@@ -39,6 +39,7 @@ void Render::init()
 	font = al_load_ttf_font("font.ttf", 20, 0);
 
 	al_clear_to_color(al_map_rgb(32, 32, 32));
+	al_flip_display();
 }
 
 void Render::update()
