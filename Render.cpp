@@ -10,20 +10,21 @@ Render::Render()
 {
 }
 
-
 Render::~Render()
 {
 }
 
 void Render::init()
 {
-	if (!al_init()) {
+	if (!al_init())
+	{
 		std::cout << "Failed to initialize allegro!" << std::endl;
 		return;
 	}
 
 	display = al_create_display(1280, 720);
-	if (!display) {
+	if (!display)
+	{
 		std::cout << "failed to create display!" << std::endl;
 		return;
 	}
@@ -89,7 +90,7 @@ void Render::drawRoad(int id, int intersectionId, int size, int intersectionSize
 		}
 		else
 		{
-			al_draw_filled_rectangle((intersectionId + 1) * 300 + 20 * intersectionSize, 300, (intersectionId + 1) * 300 + 150+20*intersectionSize, 300 + size * 20, al_map_rgb(160, 160, 160));
+			al_draw_filled_rectangle((intersectionId + 1) * 300 + 20 * intersectionSize, 300, (intersectionId + 1) * 300 + 150 + 20 * intersectionSize, 300 + size * 20, al_map_rgb(160, 160, 160));
 		}
 	}
 }
