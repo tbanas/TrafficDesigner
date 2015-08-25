@@ -14,6 +14,8 @@ void UserInterface::init()
 {
 	Render::GetInstance().init();
 	buttons.push_back(new Button(50, 50, 200, 37, "Add Intersection"));
+	buttons.push_back(new Button(300, 50, 200, 37, "Simulate"));
+	buttons.push_back(new Button(550, 50, 200, 37, "Save Project"));
 
 	eventQueue = al_create_event_queue();
 	al_register_event_source(eventQueue, al_get_mouse_event_source());

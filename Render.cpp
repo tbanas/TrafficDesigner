@@ -22,7 +22,7 @@ void Render::init()
 		return;
 	}
 
-	display = al_create_display(1280, 720);
+	display = al_create_display(800, 480);
 	if (!display) {
 		std::cout << "failed to create display!" << std::endl;
 		return;
@@ -38,6 +38,7 @@ void Render::init()
 	font = al_load_ttf_font("font.ttf", 20, 0);
 
 	al_clear_to_color(al_map_rgb(32, 32, 32));
+	al_flip_display();
 }
 
 void Render::update()
