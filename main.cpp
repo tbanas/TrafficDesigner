@@ -3,7 +3,6 @@
 #include <cstdlib>
 #include <ctime>
 
-#include <allegro5\allegro.h>
 #include <stdio.h>
 
 #include "Render.h"

@@ -11,7 +11,7 @@ private:
 	int size;
 	int x;
 	int y;
-	std::vector<std::pair<Lane, Lane>> connections;
+	std::vector<std::pair<Lane, Lane> > connections;
 
 public:
 	Intersection(int id, int size);
