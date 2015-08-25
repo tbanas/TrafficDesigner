@@ -14,6 +14,7 @@ class Render
 private:
 	ALLEGRO_DISPLAY *display;
 	ALLEGRO_FONT *font;
+	ALLEGRO_FONT* icons;
 
 public:
 	static Render &GetInstance();
@@ -24,7 +25,7 @@ public:
 	void drawButton(int x, int y, int w, int h, std::string text, ALLEGRO_EVENT e);
 	void drawAddRoadButton(int x, int y, int roadId, int intersectionId, ALLEGRO_EVENT e);
 	void drawIntersection(int id, int size);
-	void drawRoad(int id, int intersectionId, int size, int intersectionSize);
+	void drawRoad(Road* road, Intersection* intersection);
 	void drawLane(int id, int roadId, int intersectionId);
 	void drawAddLaneButton(int x, int y, ALLEGRO_EVENT e);
 	bool isMouseOver(int x, int y, int w, int h, ALLEGRO_EVENT e);

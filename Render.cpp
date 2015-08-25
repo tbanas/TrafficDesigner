@@ -36,7 +36,7 @@ void Render::init()
 	al_init_primitives_addon();
 	al_init_font_addon();
 	al_init_ttf_addon();
-	font = al_load_ttf_font("font.ttf", 20, 0);
+	this->font = al_load_ttf_font("fonts/font.ttf", 20, 0);
 
 	al_clear_to_color(al_map_rgb(32, 32, 32));
 	al_flip_display();
@@ -58,7 +58,7 @@ void Render::drawButton(int x, int y, int w, int h, std::string text, ALLEGRO_EV
 	{
 		al_draw_filled_rectangle(x, y, x + w, y + h, al_map_rgb(64, 64, 64));
 	}
-	al_draw_text(font, al_map_rgb(255, 255, 255), x + 10, y + 5, NULL, text.c_str());
+	al_draw_text(this->font, al_map_rgb(255, 255, 255), x + 10, y + 5, NULL, text.c_str());
 }
 
 void Render::drawIntersection(int id, int size)
@@ -66,32 +66,37 @@ void Render::drawIntersection(int id, int size)
 	al_draw_filled_rectangle((id + 1) * 300, 300, (id + 1) * 300 + size * 20, 300 + size * 20, al_map_rgb(0, 160, 160));
 }
 
-void Render::drawRoad(int id, int intersectionId, int size, int intersectionSize)
+void Render::drawRoad(Road* road, Intersection* intersection)
 {
-	while (id >= 4)
+	int roadId = road->getId();
+	int roadSize = road->getLanes().size();
+	int intersectionId = intersection->getId();
+	int intersectionSize = intersection->getSize();
+
+	while (roadId >= 4)
 	{
-		id -= 4;
+		roadId -= 4;
 	}
-	if (id % 2 == 0)
+	if (roadId % 2 == 0)
 	{
-		if (id % 3 == 0)
+		if (roadId % 3 == 0)
 		{
-			al_draw_filled_rectangle((intersectionId + 1) * 300, 150, (intersectionId + 1) * 300 + size * 20, 300, al_map_rgb(160, 160, 160));
+			al_draw_filled_rectangle((intersectionId + 1) * 300, 150, (intersectionId + 1) * 300 + roadSize * 20, 300, al_map_rgb(160, 160, 160));
 		}
 		else
 		{
-			al_draw_filled_rectangle((intersectionId + 1) * 300, 300 + 20 * intersectionSize, (intersectionId + 1) * 300 + size * 20, 450 + intersectionSize * 20, al_map_rgb(160, 160, 160));
+			al_draw_filled_rectangle((intersectionId + 1) * 300, 300 + 20 * intersectionSize, (intersectionId + 1) * 300 + roadSize * 20, 450 + intersectionSize * 20, al_map_rgb(160, 160, 160));
 		}
 	}
 	else
 	{
-		if (id % 3 == 0)
+		if (roadId % 3 == 0)
 		{
-			al_draw_filled_rectangle((intersectionId + 1) * 300 - 150, 300, (intersectionId + 1) * 300, 300 + 20 * size, al_map_rgb(160, 160, 160));
+			al_draw_filled_rectangle((intersectionId + 1) * 300 - 150, 300, (intersectionId + 1) * 300, 300 + 20 * roadSize, al_map_rgb(160, 160, 160));
 		}
 		else
 		{
-			al_draw_filled_rectangle((intersectionId + 1) * 300 + 20 * intersectionSize, 300, (intersectionId + 1) * 300 + 150 + 20 * intersectionSize, 300 + size * 20, al_map_rgb(160, 160, 160));
+			al_draw_filled_rectangle((intersectionId + 1) * 300 + 20 * intersectionSize, 300, (intersectionId + 1) * 300 + 150 + 20 * intersectionSize, 300 + roadSize * 20, al_map_rgb(160, 160, 160));
 		}
 	}
 }
@@ -164,5 +169,5 @@ bool Render::isMouseDown(int x, int y, int w, int h, ALLEGRO_EVENT e)
 void Render::destroy()
 {
 	al_destroy_display(display);
-	al_destroy_font(font);
+	al_destroy_font(this->font);
 }
