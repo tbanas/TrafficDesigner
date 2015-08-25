@@ -1,6 +1,5 @@
 #include <iostream>
 #include <cstdlib>
-
 #include "Render.h"
 #include "UserInterface.h"
 #include "Intersection.h"
