@@ -19,6 +19,7 @@ void FileManager::saveFile(std::vector<Intersection*> intersections, std::string
 	{
 		tinyxml2::XMLElement* intersection = newFile.NewElement("Intersection");
 		intersection->SetAttribute("id", intersections[i]->getId());
+		intersection->SetAttribute("size", intersections[i]->getSize());
 		project->InsertEndChild(intersection);
 		for (int j = 0; j < intersections[i]->getRoads().size(); j++)
 		{
@@ -37,5 +38,38 @@ void FileManager::saveFile(std::vector<Intersection*> intersections, std::string
 
 }
 
+std::vector<Intersection*> FileManager::loadFile(std::string filename)
+{
+	tinyxml2::XMLDocument newFile;
+	newFile.LoadFile(filename.c_str());
+	tinyxml2::XMLNode* project = newFile.FirstChild();
+	tinyxml2::XMLElement* intersection = project->FirstChildElement("Intersection");
+	std::vector<Intersection*> intersections;
+	while (intersection != nullptr)
+	{
+		int id, size;
+		intersection->QueryIntAttribute("id", &id);
+		intersection->QueryIntAttribute("size", &size);
+		intersections.push_back(new Intersection(id, size));
+		tinyxml2::XMLElement* road = intersection->FirstChildElement("Road");
+		while (road != nullptr)
+		{
+			int rId;
+			road->QueryIntAttribute("id", &rId);
+			intersections.back()->addRoad(rId, new Road);
+			tinyxml2::XMLElement* lane = road->FirstChildElement("Lane");
+			while (lane != nullptr)
+			{
+				int lId;
+				lane->QueryIntAttribute("id", &lId);
+				intersections.back()->getRoads().back().addLane(lId, true, new Lane);
+				lane = lane->NextSiblingElement("Lane");
+			}
+			road = road->NextSiblingElement("Road");
+		}
+		intersection = intersection->NextSiblingElement("Intersection");
+	}
+	return intersections;
+}
 
 
