@@ -1,4 +1,5 @@
-#pragma once
+#ifndef BUTTON_H
+#define BUTTON_H
 
 #include <string>
 
@@ -22,3 +23,4 @@ public:
 	bool isMouseDown(ALLEGRO_EVENT e);
 };
 
+#endif

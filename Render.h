@@ -1,4 +1,5 @@
-#pragma once
+#ifndef RENDER_H
+#define RENDER_H
 
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_primitives.h>
@@ -31,3 +32,4 @@ public:
 	void destroy();
 };
 
+#endif

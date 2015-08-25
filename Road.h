@@ -1,4 +1,5 @@
-#pragma once
+#ifndef ROAD_H
+#define ROAD_H
 
 #include <vector>
 #include "Lane.h"
@@ -20,3 +21,4 @@ public:
 	void render(int intersectionSize);
 };
 
+#endif

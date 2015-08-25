@@ -1,4 +1,5 @@
-#pragma once
+#ifndef ADDLANEBUTTON_H
+#define ADDLANEBUTTON_H
 
 #include "Render.h"
 
@@ -24,3 +25,4 @@ public:
 	bool isMouseDown(ALLEGRO_EVENT e);
 };
 
+#endif

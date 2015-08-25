@@ -1,4 +1,5 @@
-#pragma once
+#ifndef LANE_H
+#define LANE_H
 
 #include "Render.h"
 
@@ -19,3 +20,4 @@ public:
 	bool isEntry();
 };
 
+#endif

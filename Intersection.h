@@ -1,4 +1,5 @@
-#pragma once
+#ifndef INTERSECTION_H
+#define INTERSECTION_H
 
 #include <vector>
 #include "Road.h"
@@ -28,3 +29,4 @@ public:
 
 };
 
+#endif

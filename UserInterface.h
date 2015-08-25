@@ -1,3 +1,6 @@
+#ifndef USERINTERFACE_H
+#define USERINTERFACE_H
+
 #pragma once
 
 #include <string>
@@ -32,3 +35,4 @@ public:
 	void render();
 };
 
+#endif

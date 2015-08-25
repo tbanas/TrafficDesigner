@@ -3,6 +3,7 @@
 
 Lane::Lane()
 {
+	this->entry = true;
 }
 
 

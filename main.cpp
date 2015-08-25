@@ -12,7 +12,7 @@ int main(int argc, char **argv)
 {
 	UserInterface* UI = new UserInterface;
 	UI->init();
-	while (1)
+	while (true)
 	{
 		UI->update();
 	}

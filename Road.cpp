@@ -14,7 +14,6 @@ void Road::addLane(int id, bool entry, Lane* lane)
 {
 	lanes.push_back(*lane);
 	lanes.back().setId(id);
-	lanes.back().setEntry(entry);
 }
 
 void Road::setId(int id)
