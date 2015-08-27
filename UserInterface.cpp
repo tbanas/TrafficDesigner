@@ -49,6 +49,9 @@ void UserInterface::update()
 		this->render->renderButton(buttons[i], e);
 	}
 
+	/*
+	 * Add new intersection button
+	 */
 	if (this->render->isMouseDown(buttons[0]->getX(), buttons[0]->getY(), buttons[0]->getW(), buttons[0]->getH(), e))
 	{
 		intersections.push_back(new Intersection(intersectionsCounter, 1));
@@ -61,12 +64,18 @@ void UserInterface::update()
 		intersectionsCounter++;
 	}
 
+	/*
+	 * Save project to file button
+	 */
 	if (this->render->isMouseDown(buttons[1]->getX(), buttons[1]->getY(), buttons[1]->getW(), buttons[1]->getH(), e))
 	{
 		FileManager* fileManager = new FileManager;
 		fileManager->saveFile(intersections, "TrafficDesignerProject.xml");
 	}
 
+	/*
+	 * Load project from file button
+	 */
 	if (this->render->isMouseDown(buttons[2]->getX(), buttons[2]->getY(), buttons[2]->getW(), buttons[2]->getH(), e))
 	{
 		intersections.clear();
@@ -75,11 +84,17 @@ void UserInterface::update()
 		intersections[0]->getRoads()[0]->getLanes()[0]->getId();
 	}
 
+	/*
+	 * Render all created intersections
+	 */
 	for (int i = 0; i < intersections.size(); i++)
 	{
 		this->render->renderIntersection(intersections[i]);
 	}
 
+	/*
+	 * Render buttons "add road" for each intersection
+	 */
 	for (int i = 0; i < addRoadButtons.size(); i++)
 	{
 		if (addRoadButtons[i]->getVisiblity())
@@ -103,6 +118,9 @@ void UserInterface::update()
 		}
 	}
 
+	/*
+	 * Render buttons "add lane" for each road
+	 */
 	for (int i = 0; i < addLaneButtons.size(); i++)
 	{
 		if (addLaneButtons[i]->getVisibility())
@@ -127,6 +145,9 @@ void UserInterface::update()
 
 	}
 
+	/*
+	 * Update view
+	 */
 	this->render->update();
 }
 
