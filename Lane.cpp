@@ -1,11 +1,12 @@
 #include "Lane.h"
+#include "Road.h"
 
-
-Lane::Lane()
+Lane::Lane(Road* road, int id)
 {
+	this->road = road;
+	this->id = id;
 	this->entry = true;
 }
-
 
 Lane::~Lane()
 {
@@ -16,9 +17,14 @@ void Lane::setId(int newId)
 	this->id = newId;
 }
 
-void Lane::setEntry(int newEntry)
+void Lane::setEntry(bool entry)
 {
-	this->entry = newEntry;
+	this->entry = entry;
+}
+
+void Lane::setRoad(Road* road)
+{
+	this->road = road;
 }
 
 int Lane::getId()
@@ -29,4 +35,9 @@ int Lane::getId()
 bool Lane::isEntry()
 {
 	return entry;
+}
+
+Road* Lane::getRoad()
+{
+	return this->road;
 }

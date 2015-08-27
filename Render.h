@@ -8,26 +8,33 @@
 #include <allegro5/mouse.h>
 #include <iostream>
 #include <string>
+#include <vector>
+
+class Intersection;
+class AddLaneButton;
+class AddRoadButton;
+class Road;
+class Button;
+class Lane;
 
 class Render
 {
 private:
 	ALLEGRO_DISPLAY *display;
 	ALLEGRO_FONT *font;
-	ALLEGRO_FONT* icons;
 
 public:
-	static Render &GetInstance();
 	Render();
 	~Render();
 	void init();
 	void update();
-	void drawButton(int x, int y, int w, int h, std::string text, ALLEGRO_EVENT e);
-	void drawAddRoadButton(int x, int y, int roadId, int intersectionId, ALLEGRO_EVENT e);
-	void drawIntersection(int id, int size);
-	void drawRoad(Road* road, Intersection* intersection);
-	void drawLane(int id, int roadId, int intersectionId);
-	void drawAddLaneButton(int x, int y, ALLEGRO_EVENT e);
+	void renderButton(Button* button, ALLEGRO_EVENT e);
+	void renderIntersection(Intersection* intersection);
+	void renderRoads(std::vector<Road*> roads);
+	void renderRoad(Road* road);
+	void renderAddRoadButton(AddRoadButton* addRoadButton, ALLEGRO_EVENT e);
+	void renderAddLaneButton(AddLaneButton* addLaneButton, ALLEGRO_EVENT e);
+	void renderLane(Lane* lane);
 	bool isMouseOver(int x, int y, int w, int h, ALLEGRO_EVENT e);
 	bool isMouseDown(int x, int y, int w, int h, ALLEGRO_EVENT e);
 	void destroy();

@@ -1,23 +1,26 @@
 #ifndef LANE_H
 #define LANE_H
 
-#include "Render.h"
+class Road;
 
 class Lane
 {
 private:
 	int id;
 	bool entry;
+	Road* road;
 
 public:
-	Lane();
+	Lane(Road* road, int id);
 	~Lane();
 
-	void setId(int newId);
-	void setEntry(int newEntry);
+	void setId(int id);
+	void setEntry(bool entry);
+	void setRoad(Road* road);
 
 	int getId();
 	bool isEntry();
+	Road* getRoad();
 };
 
 #endif

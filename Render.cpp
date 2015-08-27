@@ -1,10 +1,10 @@
 #include "Render.h"
-
-Render &Render::GetInstance()
-{
-	static Render instance;
-	return instance;
-}
+#include "Intersection.h"
+#include "AddLaneButton.h"
+#include "AddRoadButton.h"
+#include "Button.h"
+#include "Road.h"
+#include "Lane.h"
 
 Render::Render()
 {
@@ -48,90 +48,96 @@ void Render::update()
 	al_clear_to_color(al_map_rgb(32, 32, 32));
 }
 
-void Render::drawButton(int x, int y, int w, int h, std::string text, ALLEGRO_EVENT e)
+void Render::renderButton(Button* button, ALLEGRO_EVENT e)
 {
-	if (isMouseOver(x, y, w, h, e))
+	if (isMouseOver(button->getX(), button->getY(), button->getW(), button->getH(), e))
 	{
-		al_draw_filled_rectangle(x, y, x + w, y + h, al_map_rgb(160, 160, 160));
+		al_draw_filled_rectangle(button->getX(), button->getY(), button->getX() + button->getW(), button->getY() + button->getH(), al_map_rgb(160, 160, 160));
 	}
 	else
 	{
-		al_draw_filled_rectangle(x, y, x + w, y + h, al_map_rgb(64, 64, 64));
+		al_draw_filled_rectangle(button->getX(), button->getY(), button->getX() + button->getW(), button->getY() + button->getH(), al_map_rgb(64, 64, 64));
 	}
-	al_draw_text(this->font, al_map_rgb(255, 255, 255), x + 10, y + 5, NULL, text.c_str());
+
+	al_draw_text(this->font, al_map_rgb(255, 255, 255), button->getX() + 10, button->getY() + 5, NULL, button->getText().c_str());
 }
 
-void Render::drawIntersection(int id, int size)
+void Render::renderIntersection(Intersection* intersection)
 {
-	al_draw_filled_rectangle((id + 1) * 300, 300, (id + 1) * 300 + size * 20, 300 + size * 20, al_map_rgb(0, 160, 160));
+	al_draw_filled_rectangle((intersection->getId() + 1) * 300, 300, (intersection->getId() + 1) * 300 + intersection->getSize() * 20, 300 + intersection->getSize() * 20, al_map_rgb(0, 160, 160));
+
+	this->renderRoads(intersection->getRoads());
 }
 
-void Render::drawRoad(Road* road, Intersection* intersection)
+void Render::renderRoads(std::vector<Road*> roads)
 {
-	int roadId = road->getId();
-	int roadSize = road->getLanes().size();
-	int intersectionId = intersection->getId();
-	int intersectionSize = intersection->getSize();
-
-	while (roadId >= 4)
+	for (int i = 0; i < roads.size(); i++)
 	{
-		roadId -= 4;
+		this->renderRoad(roads[i]);
 	}
-	if (roadId % 2 == 0)
+}
+
+void Render::renderRoad(Road* road)
+{
+	while (road->getId() >= 4)
 	{
-		if (roadId % 3 == 0)
+		road->setId(road->getId() - 4);
+	}
+	if (road->getId() % 2 == 0)
+	{
+		if (road->getId() % 3 == 0)
 		{
-			al_draw_filled_rectangle((intersectionId + 1) * 300, 150, (intersectionId + 1) * 300 + roadSize * 20, 300, al_map_rgb(160, 160, 160));
+			al_draw_filled_rectangle((road->getIntersection()->getId() + 1) * 300, 150, (road->getIntersection()->getId() + 1) * 300 + road->getLanes().size() * 20, 300, al_map_rgb(160, 160, 160));
 		}
 		else
 		{
-			al_draw_filled_rectangle((intersectionId + 1) * 300, 300 + 20 * intersectionSize, (intersectionId + 1) * 300 + roadSize * 20, 450 + intersectionSize * 20, al_map_rgb(160, 160, 160));
+			al_draw_filled_rectangle((road->getIntersection()->getId() + 1) * 300, 300 + 20 * road->getIntersection()->getSize(), (road->getIntersection()->getId() + 1) * 300 + road->getLanes().size() * 20, 450 + road->getIntersection()->getSize() * 20, al_map_rgb(160, 160, 160));
 		}
 	}
 	else
 	{
-		if (roadId % 3 == 0)
+		if (road->getId() % 3 == 0)
 		{
-			al_draw_filled_rectangle((intersectionId + 1) * 300 - 150, 300, (intersectionId + 1) * 300, 300 + 20 * roadSize, al_map_rgb(160, 160, 160));
+			al_draw_filled_rectangle((road->getIntersection()->getId() + 1) * 300 - 150, 300, (road->getIntersection()->getId() + 1) * 300, 300 + 20 * road->getLanes().size(), al_map_rgb(160, 160, 160));
 		}
 		else
 		{
-			al_draw_filled_rectangle((intersectionId + 1) * 300 + 20 * intersectionSize, 300, (intersectionId + 1) * 300 + 150 + 20 * intersectionSize, 300 + roadSize * 20, al_map_rgb(160, 160, 160));
+			al_draw_filled_rectangle((road->getIntersection()->getId() + 1) * 300 + 20 * road->getIntersection()->getSize(), 300, (road->getIntersection()->getId() + 1) * 300 + 150 + 20 * road->getIntersection()->getSize(), 300 + road->getLanes().size() * 20, al_map_rgb(160, 160, 160));
 		}
 	}
 }
 
-void Render::drawLane(int id, int roadId, int intersectionId)
+void Render::renderAddLaneButton(AddLaneButton* addLaneButton, ALLEGRO_EVENT e)
 {
-
-}
-
-void Render::drawAddLaneButton(int x, int y, ALLEGRO_EVENT e)
-{
-	if (isMouseOver(x, y, 20, 20, e))
+	if (isMouseOver(addLaneButton->getX(), addLaneButton->getY(), 20, 20, e))
 	{
-		al_draw_filled_rectangle(x, y, x + 20, y + 20, al_map_rgb(0, 153, 0));
+		al_draw_filled_rectangle(addLaneButton->getX(), addLaneButton->getY(), addLaneButton->getX() + 20, addLaneButton->getY() + 20, al_map_rgb(0, 153, 0));
 	}
 	else
 	{
-		al_draw_filled_rectangle(x, y, x + 20, y + 20, al_map_rgb(0, 53, 0));
+		al_draw_filled_rectangle(addLaneButton->getX(), addLaneButton->getY(), addLaneButton->getX() + 20, addLaneButton->getY() + 20, al_map_rgb(0, 53, 0));
 	}
-	al_draw_filled_rectangle(x + 9, y + 4, x + 11, y + 16, al_map_rgb(255, 255, 255));
-	al_draw_filled_rectangle(x + 4, y + 9, x + 16, y + 11, al_map_rgb(255, 255, 255));
+	al_draw_filled_rectangle(addLaneButton->getX() + 9, addLaneButton->getY() + 4, addLaneButton->getX() + 11, addLaneButton->getY() + 16, al_map_rgb(255, 255, 255));
+	al_draw_filled_rectangle(addLaneButton->getX() + 4, addLaneButton->getY() + 9, addLaneButton->getX() + 16, addLaneButton->getY() + 11, al_map_rgb(255, 255, 255));
 }
 
-void Render::drawAddRoadButton(int x, int y, int roadId, int intersectionId, ALLEGRO_EVENT e)
+void Render::renderAddRoadButton(AddRoadButton* addRoadButton, ALLEGRO_EVENT e)
 {
-	if (isMouseOver(x, y, 20, 20, e))
+	if (isMouseOver(addRoadButton->getX(), addRoadButton->getY(), 20, 20, e))
 	{
-		al_draw_filled_rectangle(x, y, x + 20, y + 20, al_map_rgb(160, 160, 160));
+		al_draw_filled_rectangle(addRoadButton->getX(), addRoadButton->getY(), addRoadButton->getX() + 20, addRoadButton->getY() + 20, al_map_rgb(160, 160, 160));
 	}
 	else
 	{
-		al_draw_filled_rectangle(x, y, x + 20, y + 20, al_map_rgb(64, 64, 64));
+		al_draw_filled_rectangle(addRoadButton->getX(), addRoadButton->getY(), addRoadButton->getX() + 20, addRoadButton->getY() + 20, al_map_rgb(64, 64, 64));
 	}
-	al_draw_filled_rectangle(x + 9, y + 4, x + 11, y + 16, al_map_rgb(255, 255, 255));
-	al_draw_filled_rectangle(x + 4, y + 9, x + 16, y + 11, al_map_rgb(255, 255, 255));
+	al_draw_filled_rectangle(addRoadButton->getX() + 9, addRoadButton->getY() + 4, addRoadButton->getX() + 11, addRoadButton->getY() + 16, al_map_rgb(255, 255, 255));
+	al_draw_filled_rectangle(addRoadButton->getX() + 4, addRoadButton->getY() + 9, addRoadButton->getX() + 16, addRoadButton->getY() + 11, al_map_rgb(255, 255, 255));
+}
+
+void Render::renderLane(Lane* lane)
+{
+
 }
 
 bool Render::isMouseOver(int x, int y, int w, int h, ALLEGRO_EVENT e)

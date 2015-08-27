@@ -2,23 +2,26 @@
 #define ROAD_H
 
 #include <vector>
-#include "Lane.h"
+
+class Lane;
+class Intersection;
 
 class Road
 {
 private:
-	std::vector<Lane> lanes;
+	std::vector<Lane*> lanes;
 	int id;
+	Intersection* intersection;
 
 public:
-	Road();
+	Road(Intersection* intersection, int id);
 	~Road();
 
 	void addLane(int id, bool entry, Lane* lane);
 	void setId(int id);
-	std::vector<Lane>& getLanes();
+	std::vector<Lane*> getLanes();
 	int getId();
-	void render(int intersectionSize);
+	Intersection* getIntersection();
 };
 
 #endif

@@ -19,7 +19,6 @@ public:
 	int getW();
 	int getH();
 	std::string getText();
-	void render(ALLEGRO_EVENT e);
 	bool isMouseDown(ALLEGRO_EVENT e);
 };
 

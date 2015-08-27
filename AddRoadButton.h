@@ -1,26 +1,26 @@
 #ifndef ADDROADBUTTON_H
 #define ADDROADBUTTON_H
 
-#include "Render.h"
+class Road;
 
 class AddRoadButton
 {
 private:
 	int x, y, w, h;
-	int roadId;
-	int intersectionId;
+	Road* road;
 	bool isVisible;
 
 public:
-	AddRoadButton(int roadId, int intersectionId);
+	AddRoadButton(Road* road);
 	~AddRoadButton();
-	int getRoadId();
-	int getIntersectionId();
+	int getX();
+	int getY();
+	int getW();
+	int getH();
+	Road* getRoad();
 	bool getVisiblity();
 	void setVisiblity(bool isVisible);
-	void setPosition(int intersectionSize);
-	void render(ALLEGRO_EVENT e);
-	bool isMouseDown(ALLEGRO_EVENT e);
+	void changePosition();
 };
 
 #endif

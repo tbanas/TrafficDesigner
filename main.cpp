@@ -1,10 +1,7 @@
 #include <iostream>
 #include <cstdlib>
-#include "Render.h"
+
 #include "UserInterface.h"
-#include "Intersection.h"
-#include "Lane.h"
-#include "Road.h"
 
 using namespace std;
 

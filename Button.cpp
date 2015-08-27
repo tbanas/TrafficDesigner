@@ -39,17 +39,12 @@ std::string Button::getText()
 {
 	return text;
 }
-
-void Button::render(ALLEGRO_EVENT e)
-{
-	Render::GetInstance().drawButton(x, y, w, h, text, e);
-}
-
-bool Button::isMouseDown(ALLEGRO_EVENT e)
-{
-	if (Render::GetInstance().isMouseDown(x, y, w, h, e))
-	{
-		return true;
-	}
-	return false;
-}
+//
+//bool Button::isMouseDown(ALLEGRO_EVENT e)
+//{
+//	if (Render::GetInstance().isMouseDown(x, y, w, h, e))
+//	{
+//		return true;
+//	}
+//	return false;
+//}

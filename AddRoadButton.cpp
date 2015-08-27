@@ -1,12 +1,12 @@
 #include "AddRoadButton.h"
+#include "Road.h"
+#include "Intersection.h"
 
-
-AddRoadButton::AddRoadButton(int roadId, int intersectionId)
+AddRoadButton::AddRoadButton(Road* road)
 {
-	this->roadId = roadId;
-	this->intersectionId = intersectionId;
+	this->road = road;
 	int changeX = 0, changeY = 0;
-	int checkRoadId = roadId;
+	int checkRoadId = this->road->getId();
 	while (checkRoadId >= 4)
 	{
 		checkRoadId -= 4;
@@ -31,7 +31,7 @@ AddRoadButton::AddRoadButton(int roadId, int intersectionId)
 		changeX = -25;
 		changeY = 0;
 	}
-	this->x = (intersectionId + 1) * 300 + changeX;
+	this->x = (this->road->getIntersection()->getId() + 1) * 300 + changeX;
 	this->y = 300 + changeY;
 	this->w = 20;
 	this->h = 20;
@@ -43,13 +43,29 @@ AddRoadButton::~AddRoadButton()
 {
 }
 
-int AddRoadButton::getRoadId()
+int AddRoadButton::getX()
 {
-	return roadId;
+	return this->x;
 }
-int AddRoadButton::getIntersectionId()
+
+int AddRoadButton::getY()
 {
-	return intersectionId;
+	return this->y;
+}
+
+int AddRoadButton::getW()
+{
+	return this->w;
+}
+
+int AddRoadButton::getH()
+{
+	return this->h;
+}
+
+Road* AddRoadButton::getRoad()
+{
+	return this->road;
 }
 
 bool AddRoadButton::getVisiblity()
@@ -62,10 +78,10 @@ void AddRoadButton::setVisiblity(bool isVisible)
 	this->isVisible = isVisible;
 }
 
-void AddRoadButton::setPosition(int intersectionSize)
+void AddRoadButton::changePosition()
 {
 	int changeX = 0, changeY = 0;
-	int checkRoadId = roadId;
+	int checkRoadId = this->road->getId();
 	while (checkRoadId >= 4)
 	{
 		checkRoadId -= 4;
@@ -77,33 +93,19 @@ void AddRoadButton::setPosition(int intersectionSize)
 	}
 	else if (checkRoadId == 1)
 	{
-		changeX = 25 + (intersectionSize - 1) * 20;
+		changeX = 25 + (this->road->getIntersection()->getSize() - 1) * 20;
 		changeY = 0;
 	}
 	else if (checkRoadId == 2)
 	{
 		changeX = 0;
-		changeY = 25 + (intersectionSize - 1) * 20;
+		changeY = 25 + (this->road->getIntersection()->getSize() - 1) * 20;
 	}
 	else if (checkRoadId == 3)
 	{
 		changeX = -25;
 		changeY = 0;
 	}
-	this->x = (intersectionId + 1) * 300 + changeX;
+	this->x = (this->road->getIntersection()->getId() + 1) * 300 + changeX;
 	this->y = 300 + changeY;
-}
-
-void AddRoadButton::render(ALLEGRO_EVENT e)
-{
-	Render::GetInstance().drawAddRoadButton(x, y, roadId, intersectionId, e);
-}
-
-bool AddRoadButton::isMouseDown(ALLEGRO_EVENT e)
-{
-	if (Render::GetInstance().isMouseDown(x, y, w, h, e))
-	{
-		return true;
-	}
-	return false;
 }

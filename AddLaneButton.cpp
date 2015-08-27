@@ -1,11 +1,12 @@
 #include "AddLaneButton.h"
+#include "Lane.h"
+#include "Road.h"
+#include "Intersection.h"
 
-
-AddLaneButton::AddLaneButton(int roadId, int intersectionId, int position, int intersectionSize)
+AddLaneButton::AddLaneButton(Lane* lane, int position)
 {
-	this->roadId = roadId;
-	this->intersectionId = intersectionId;
-	setPosition(position, intersectionSize);
+	this->lane = lane;
+	changePosition(position);
 	this->w = 20;
 	this->h = 20;
 	isVisible = true;
@@ -16,9 +17,29 @@ AddLaneButton::~AddLaneButton()
 {
 }
 
-void AddLaneButton::setLaneId(int laneId)
+int AddLaneButton::getX()
 {
-	this->laneId = laneId;
+	return this->x;
+}
+
+int AddLaneButton::getY()
+{
+	return this->y;
+}
+
+int AddLaneButton::getW()
+{
+	return this->w;
+}
+
+int AddLaneButton::getH()
+{
+	return this->h;
+}
+
+void AddLaneButton::setLane(Lane* lane)
+{
+	this->lane = lane;
 }
 
 void AddLaneButton::setVisibility(bool isVisible)
@@ -31,19 +52,10 @@ bool AddLaneButton::getVisibility()
 	return isVisible;
 }
 
-int AddLaneButton::getRoadId()
-{
-	return roadId;
-}
-int AddLaneButton::getIntersectionId()
-{
-	return intersectionId;
-}
-
-void AddLaneButton::setPosition(int position, int intersectionSize)
+void AddLaneButton::changePosition(int position)
 {
 	int changeX = 0, changeY = 0;
-	int checkRoadId = roadId;
+	int checkRoadId = this->lane->getRoad()->getId();
 	while (checkRoadId >= 4)
 	{
 		checkRoadId -= 4;
@@ -55,33 +67,24 @@ void AddLaneButton::setPosition(int position, int intersectionSize)
 	}
 	else if (checkRoadId == 1)
 	{
-		changeX = 50 + (intersectionSize - 1) * 20;
+		changeX = 50 + (this->lane->getRoad()->getIntersection()->getSize() - 1) * 20;
 		changeY = 20 * position;
 	}
 	else if (checkRoadId == 2)
 	{
 		changeX = 20 * position;
-		changeY = 50 + (intersectionSize - 1) * 20;
+		changeY = 50 + (this->lane->getRoad()->getIntersection()->getSize() - 1) * 20;
 	}
 	else if (checkRoadId == 3)
 	{
 		changeX = -50;
 		changeY = 20 * position;
 	}
-	this->x = (intersectionId + 1) * 300 + changeX;
+	this->x = (this->lane->getRoad()->getIntersection()->getId() + 1) * 300 + changeX;
 	this->y = 300 + changeY;
 }
 
-void AddLaneButton::render(ALLEGRO_EVENT e)
+Lane* AddLaneButton::getLane()
 {
-	Render::GetInstance().drawAddLaneButton(x, y, e);
-}
-
-bool AddLaneButton::isMouseDown(ALLEGRO_EVENT e)
-{
-	if (Render::GetInstance().isMouseDown(x, y, w, h, e))
-	{
-		return true;
-	}
-	return false;
+	return this->lane;
 }
