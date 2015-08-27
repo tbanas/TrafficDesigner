@@ -4,6 +4,7 @@
 #include "Lane.h"
 #include "AddRoadButton.h"
 #include "AddLaneButton.h"
+#include "FileManager.h"
 
 UserInterface::UserInterface()
 {
@@ -18,8 +19,8 @@ void UserInterface::init()
 	this->setRender(new Render);
 	this->getRender()->init();
 	buttons.push_back(new Button(50, 50, 200, 37, "Add intersection"));
-	buttons.push_back(new Button(300, 50, 200, 37, "Simulate"));
-	buttons.push_back(new Button(550, 50, 200, 37, "Save project"));
+	buttons.push_back(new Button(300, 50, 200, 37, "Save Project"));
+	buttons.push_back(new Button(550, 50, 200, 37, "Load project"));
 
 	eventQueue = al_create_event_queue();
 	al_register_event_source(eventQueue, al_get_mouse_event_source());
@@ -54,10 +55,24 @@ void UserInterface::update()
 
 		for (int i = roadsCounter; i < roadsCounter + 4; i++)
 		{
-			addRoadButtons.push_back(new AddRoadButton(new Road(intersections.back(), roadsCounter)));
+			addRoadButtons.push_back(new AddRoadButton(new Road(intersections.back(), i)));
 		}
 		roadsCounter += 4;
 		intersectionsCounter++;
+	}
+
+	if (this->render->isMouseDown(buttons[1]->getX(), buttons[1]->getY(), buttons[1]->getW(), buttons[1]->getH(), e))
+	{
+		FileManager* fileManager = new FileManager;
+		fileManager->saveFile(intersections, "TrafficDesignerProject.xml");
+	}
+
+	if (this->render->isMouseDown(buttons[2]->getX(), buttons[2]->getY(), buttons[2]->getW(), buttons[2]->getH(), e))
+	{
+		intersections.clear();
+		FileManager* fileManager = new FileManager;
+		intersections = fileManager->loadFile("TrafficDesignerProject.xml");
+		intersections[0]->getRoads()[0]->getLanes()[0]->getId();
 	}
 
 	for (int i = 0; i < intersections.size(); i++)
@@ -69,6 +84,8 @@ void UserInterface::update()
 	{
 		if (addRoadButtons[i]->getVisiblity())
 		{
+			addRoadButtons[i]->changePosition();
+
 			this->render->renderAddRoadButton(addRoadButtons[i], e);
 			int x = addRoadButtons[i]->getX();
 			int y = addRoadButtons[i]->getY();

@@ -6,8 +6,10 @@
 #include <vector>
 #include <string>
 
-#include "tinyxml2.h"
 #include "Intersection.h"
+#include "Road.h"
+#include "Lane.h"
+
 
 class FileManager
 {
