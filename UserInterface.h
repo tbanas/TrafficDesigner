@@ -15,8 +15,8 @@ class UserInterface
 private:
 	Render* render;
 	std::vector<Button*> buttons;
-	std::vector<AddRoadButton*> addRoadButtons;
-	std::vector<AddLaneButton*> addLaneButtons;
+	std::vector<ButtonAddRoad*> ButtonAddRoads;
+	std::vector<ButtonAddLane*> ButtonAddLanes;
 	ALLEGRO_EVENT_QUEUE* eventQueue;
 	std::vector<Intersection*> intersections;
 	int lanesCounter;

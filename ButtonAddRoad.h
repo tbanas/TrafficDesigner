@@ -1,9 +1,9 @@
-#ifndef ADDROADBUTTON_H
-#define ADDROADBUTTON_H
+#ifndef ButtonAddRoad_H
+#define ButtonAddRoad_H
 
 class Road;
 
-class AddRoadButton
+class ButtonAddRoad
 {
 private:
 	int x, y, w, h;
@@ -11,8 +11,8 @@ private:
 	bool isVisible;
 
 public:
-	AddRoadButton(Road* road);
-	~AddRoadButton();
+	ButtonAddRoad(Road* road);
+	~ButtonAddRoad();
 	int getX();
 	int getY();
 	int getW();

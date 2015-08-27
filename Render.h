@@ -11,8 +11,8 @@
 #include <vector>
 
 class Intersection;
-class AddLaneButton;
-class AddRoadButton;
+class ButtonAddLane;
+class ButtonAddRoad;
 class Road;
 class Button;
 class Lane;
@@ -32,8 +32,8 @@ public:
 	void renderIntersection(Intersection* intersection);
 	void renderRoads(std::vector<Road*> roads);
 	void renderRoad(Road* road);
-	void renderAddRoadButton(AddRoadButton* addRoadButton, ALLEGRO_EVENT e);
-	void renderAddLaneButton(AddLaneButton* addLaneButton, ALLEGRO_EVENT e);
+	void renderButtonAddRoad(ButtonAddRoad* ButtonAddRoad, ALLEGRO_EVENT e);
+	void renderButtonAddLane(ButtonAddLane* ButtonAddLane, ALLEGRO_EVENT e);
 	void renderLane(Lane* lane);
 	bool isMouseOver(int x, int y, int w, int h, ALLEGRO_EVENT e);
 	bool isMouseDown(int x, int y, int w, int h, ALLEGRO_EVENT e);

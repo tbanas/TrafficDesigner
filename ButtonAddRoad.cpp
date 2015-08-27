@@ -1,8 +1,8 @@
-#include "AddRoadButton.h"
+#include "ButtonAddRoad.h"
 #include "Road.h"
 #include "Intersection.h"
 
-AddRoadButton::AddRoadButton(Road* road)
+ButtonAddRoad::ButtonAddRoad(Road* road)
 {
 	this->road = road;
 	int changeX = 0, changeY = 0;
@@ -39,46 +39,46 @@ AddRoadButton::AddRoadButton(Road* road)
 }
 
 
-AddRoadButton::~AddRoadButton()
+ButtonAddRoad::~ButtonAddRoad()
 {
 }
 
-int AddRoadButton::getX()
+int ButtonAddRoad::getX()
 {
 	return this->x;
 }
 
-int AddRoadButton::getY()
+int ButtonAddRoad::getY()
 {
 	return this->y;
 }
 
-int AddRoadButton::getW()
+int ButtonAddRoad::getW()
 {
 	return this->w;
 }
 
-int AddRoadButton::getH()
+int ButtonAddRoad::getH()
 {
 	return this->h;
 }
 
-Road* AddRoadButton::getRoad()
+Road* ButtonAddRoad::getRoad()
 {
 	return this->road;
 }
 
-bool AddRoadButton::getVisiblity()
+bool ButtonAddRoad::getVisiblity()
 {
 	return isVisible;
 }
 
-void AddRoadButton::setVisiblity(bool isVisible)
+void ButtonAddRoad::setVisiblity(bool isVisible)
 {
 	this->isVisible = isVisible;
 }
 
-void AddRoadButton::changePosition()
+void ButtonAddRoad::changePosition()
 {
 	int changeX = 0, changeY = 0;
 	int checkRoadId = this->road->getId();

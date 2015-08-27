@@ -1,9 +1,9 @@
-#ifndef ADDLANEBUTTON_H
-#define ADDLANEBUTTON_H
+#ifndef ButtonAddLane_H
+#define ButtonAddLane_H
 
 class Lane;
 
-class AddLaneButton
+class ButtonAddLane
 {
 private:
 	int x;
@@ -14,8 +14,8 @@ private:
 	bool isVisible;
 
 public:
-	AddLaneButton(Lane* lane, int position);
-	~AddLaneButton();
+	ButtonAddLane(Lane* lane, int position);
+	~ButtonAddLane();
 	int getX();
 	int getY();
 	int getW();

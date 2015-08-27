@@ -1,9 +1,9 @@
-#include "AddLaneButton.h"
+#include "ButtonAddLane.h"
 #include "Lane.h"
 #include "Road.h"
 #include "Intersection.h"
 
-AddLaneButton::AddLaneButton(Lane* lane, int position)
+ButtonAddLane::ButtonAddLane(Lane* lane, int position)
 {
 	this->lane = lane;
 	changePosition(position);
@@ -13,46 +13,46 @@ AddLaneButton::AddLaneButton(Lane* lane, int position)
 }
 
 
-AddLaneButton::~AddLaneButton()
+ButtonAddLane::~ButtonAddLane()
 {
 }
 
-int AddLaneButton::getX()
+int ButtonAddLane::getX()
 {
 	return this->x;
 }
 
-int AddLaneButton::getY()
+int ButtonAddLane::getY()
 {
 	return this->y;
 }
 
-int AddLaneButton::getW()
+int ButtonAddLane::getW()
 {
 	return this->w;
 }
 
-int AddLaneButton::getH()
+int ButtonAddLane::getH()
 {
 	return this->h;
 }
 
-void AddLaneButton::setLane(Lane* lane)
+void ButtonAddLane::setLane(Lane* lane)
 {
 	this->lane = lane;
 }
 
-void AddLaneButton::setVisibility(bool isVisible)
+void ButtonAddLane::setVisibility(bool isVisible)
 {
 	this->isVisible = isVisible;
 }
 
-bool AddLaneButton::getVisibility()
+bool ButtonAddLane::getVisibility()
 {
 	return isVisible;
 }
 
-void AddLaneButton::changePosition(int position)
+void ButtonAddLane::changePosition(int position)
 {
 	int changeX = 0, changeY = 0;
 	int checkRoadId = this->lane->getRoad()->getId();
@@ -84,7 +84,7 @@ void AddLaneButton::changePosition(int position)
 	this->y = 300 + changeY;
 }
 
-Lane* AddLaneButton::getLane()
+Lane* ButtonAddLane::getLane()
 {
 	return this->lane;
 }

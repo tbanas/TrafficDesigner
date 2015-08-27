@@ -2,8 +2,8 @@
 #include "Intersection.h"
 #include "Road.h"
 #include "Lane.h"
-#include "AddRoadButton.h"
-#include "AddLaneButton.h"
+#include "ButtonAddLane.h"
+#include "ButtonAddRoad.h"
 #include "FileManager.h"
 
 UserInterface::UserInterface()
@@ -58,7 +58,7 @@ void UserInterface::update()
 
 		for (int i = roadsCounter; i < roadsCounter + 4; i++)
 		{
-			addRoadButtons.push_back(new AddRoadButton(new Road(intersections.back(), i)));
+			ButtonAddRoads.push_back(new ButtonAddRoad(new Road(intersections.back(), i)));
 		}
 		roadsCounter += 4;
 		intersectionsCounter++;
@@ -95,24 +95,24 @@ void UserInterface::update()
 	/*
 	 * Render buttons "add road" for each intersection
 	 */
-	for (int i = 0; i < addRoadButtons.size(); i++)
+	for (int i = 0; i < ButtonAddRoads.size(); i++)
 	{
-		if (addRoadButtons[i]->getVisiblity())
+		if (ButtonAddRoads[i]->getVisiblity())
 		{
-			addRoadButtons[i]->changePosition();
+			ButtonAddRoads[i]->changePosition();
 
-			this->render->renderAddRoadButton(addRoadButtons[i], e);
-			int x = addRoadButtons[i]->getX();
-			int y = addRoadButtons[i]->getY();
-			int w = addRoadButtons[i]->getW();
-			int h = addRoadButtons[i]->getH();
+			this->render->renderButtonAddRoad(ButtonAddRoads[i], e);
+			int x = ButtonAddRoads[i]->getX();
+			int y = ButtonAddRoads[i]->getY();
+			int w = ButtonAddRoads[i]->getW();
+			int h = ButtonAddRoads[i]->getH();
 
 			if (this->render->isMouseDown(x, y, w, h, e))
 			{
-				addRoadButtons[i]->getRoad()->getIntersection()->addRoad(addRoadButtons[i]->getRoad());
-				std::cout << "Successfully added road " << addRoadButtons[i]->getRoad()->getId() << " to intersection " << addRoadButtons[i]->getRoad()->getIntersection()->getId() << std::endl;
-				addRoadButtons[i]->setVisiblity(false);
-				addLaneButtons.push_back(new AddLaneButton(new Lane(addRoadButtons[i]->getRoad(), lanesCounter), 0));
+				ButtonAddRoads[i]->getRoad()->getIntersection()->addRoad(ButtonAddRoads[i]->getRoad());
+				std::cout << "Successfully added road " << ButtonAddRoads[i]->getRoad()->getId() << " to intersection " << ButtonAddRoads[i]->getRoad()->getIntersection()->getId() << std::endl;
+				ButtonAddRoads[i]->setVisiblity(false);
+				ButtonAddLanes.push_back(new ButtonAddLane(new Lane(ButtonAddRoads[i]->getRoad(), lanesCounter), 0));
 			}
 
 		}
@@ -121,23 +121,23 @@ void UserInterface::update()
 	/*
 	 * Render buttons "add lane" for each road
 	 */
-	for (int i = 0; i < addLaneButtons.size(); i++)
+	for (int i = 0; i < ButtonAddLanes.size(); i++)
 	{
-		if (addLaneButtons[i]->getVisibility())
+		if (ButtonAddLanes[i]->getVisibility())
 		{
-			addLaneButtons[i]->changePosition(addLaneButtons[i]->getLane()->getRoad()->getLanes().size());
+			ButtonAddLanes[i]->changePosition(ButtonAddLanes[i]->getLane()->getRoad()->getLanes().size());
 
-			this->render->renderAddLaneButton(addLaneButtons[i], e);
-			int x = addLaneButtons[i]->getX();
-			int y = addLaneButtons[i]->getY();
-			int w = addLaneButtons[i]->getW();
-			int h = addLaneButtons[i]->getH();
+			this->render->renderButtonAddLane(ButtonAddLanes[i], e);
+			int x = ButtonAddLanes[i]->getX();
+			int y = ButtonAddLanes[i]->getY();
+			int w = ButtonAddLanes[i]->getW();
+			int h = ButtonAddLanes[i]->getH();
 
 			if (this->render->isMouseDown(x, y, w, h, e))
 			{
-				addLaneButtons[i]->getLane()->getRoad()->addLane(lanesCounter, true, new Lane(addLaneButtons[i]->getLane()->getRoad(), lanesCounter));
+				ButtonAddLanes[i]->getLane()->getRoad()->addLane(lanesCounter, true, new Lane(ButtonAddLanes[i]->getLane()->getRoad(), lanesCounter));
 				lanesCounter++;
-				intersections[addLaneButtons[i]->getLane()->getRoad()->getIntersection()->getId()]->updateSize();
+				intersections[ButtonAddLanes[i]->getLane()->getRoad()->getIntersection()->getId()]->updateSize();
 
 			}
 
