@@ -23,7 +23,7 @@ public:
 	int getId();
 	int getSize();
 	void addConnection(Lane* lane1, Lane* lane2);
-	bool isConnected(Lane* lane1, Lane* lane2);\
+	bool isConnected(Lane* lane1, Lane* lane2);
 };
 
 #endif
